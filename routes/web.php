@@ -48,6 +48,10 @@ Route::get('/faq', function () {
     return Inertia::render('faq');
 })->name('faq');
 
+Route::get('/future', function () {
+    return Inertia::render('future');
+})->name('future');
+
 // Authenticated routes
 Route::middleware(['auth', 'verified'])->group(function () {
     // Dashboard

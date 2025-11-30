@@ -63,7 +63,7 @@ export default function Welcome() {
 
                             {/* CTAs */}
                             <div className="mb-6 flex flex-col items-center gap-6 md:flex-row">
-                                <Link href="/contact" className="rounded-lg bg-[#C5B393] px-8 py-4 text-lg font-bold text-white shadow-lg transition-all hover:bg-[#b09f80] hover:shadow-[#C5B393]/20">
+                                <Link href="/future" className="rounded-lg bg-[#C5B393] px-8 py-4 text-lg font-bold text-white shadow-lg transition-all hover:bg-[#b09f80] hover:shadow-[#C5B393]/20">
                                     Support Glenride's Founding Fund
                                 </Link>
                                 <a href="#letter" className="flex items-center gap-2 border-b border-transparent text-lg font-bold text-white transition-colors hover:border-[#C5B393] hover:text-[#C5B393]">
@@ -145,7 +145,7 @@ export default function Welcome() {
                                     <p className="text-xl text-gray-300 mb-8">
                                         We aren’t raising capital to hoard it. We are raising capital so we can stop pretending world-scale problems can be solved on pocket change.
                                     </p>
-                                    <Link href="/contact" className="inline-flex items-center gap-2 text-[#C5B393] hover:text-white transition-colors font-bold uppercase tracking-wider text-sm">
+                                    <Link href="/future" className="inline-flex items-center gap-2 text-[#C5B393] hover:text-white transition-colors font-bold uppercase tracking-wider text-sm">
                                         See how the fund is used <ArrowRight className="h-4 w-4" />
                                     </Link>
                                 </div>
