@@ -47,8 +47,8 @@ export default function Welcome() {
                         {/* Background Image */}
                         <div className="absolute inset-0">
                             <img
-                                src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2301&auto=format&fit=crop"
-                                alt="Glenride Architecture"
+                                src="/hero-image.jpg"
+                                alt="Glenride team collaboration"
                                 className="h-full w-full object-cover opacity-40 grayscale"
                             />
                             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-900/60 to-gray-900"></div>
