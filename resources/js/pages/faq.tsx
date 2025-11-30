@@ -13,6 +13,18 @@ export default function FAQ() {
 
     const faqs: FAQItem[] = [
         {
+            question: 'Why frame this like a startup raise?',
+            answer: 'Because the world already accepts billion‑dollar startup rounds as normal. Capital flows easily when the goal is to capture markets or maximize engagement. We believe the same level of ambition should be available for public‑purpose institutions. Glenride is raising startup‑scale capital not to chase valuation, but to move quickly, take informed risks, and back a portfolio of experiments—with the difference that our “returns” are measured in institutions re‑designed, communities empowered, and systems made more just, not stock prices.'
+        },
+        {
+            question: 'If this is like a startup, what’s the “exit”?',
+            answer: 'There is no exit in the traditional sense. We’re adopting the speed and experimentation of startups, the rigor and depth of scholarship, and the accountability of movement work—but we are not building something to be sold. Instead of an exit, we aim for durable public infrastructure (laws, governance models, tools, cooperatives), a thriving ecosystem of people and organizations who can keep building without us, and a Glenride institution strong enough to outlast individual leaders and short political cycles. The “return” is structural change.'
+        },
+        {
+            question: 'Where does the “startup” analogy stop?',
+            answer: 'We adopt only the parts that serve our mission: Ambition, Portfolio thinking, and Speed. We explicitly reject extractive ownership structures, prioritizing monetization over human impact, and exits that hand public‑purpose infrastructure to private control.'
+        },
+        {
             question: 'Is Glenride an academic institution, a nonprofit, or a company?',
             answer: 'Glenride is a hybrid think tank and build space. We work with universities, community organizations, and partners across sectors, but our core commitment is to build an ecosystem—not a single institution. As we grow, we may use different legal structures in different regions to best support our mission.'
         },
@@ -30,15 +42,15 @@ export default function FAQ() {
         },
         {
             question: 'Can my organization partner with Glenride?',
-            answer: 'Yes. We collaborate with community organizations, research centers, public-interest groups, and values-aligned companies. Start on the Join or Contact page and share what you're envisioning.'
+            answer: "Yes. We collaborate with community organizations, research centers, public-interest groups, and values-aligned companies. Start on the Join or Contact page and share what you're envisioning."
         },
         {
             question: 'What does "engineering the future" mean?',
             answer: 'We believe the future is not predetermined—it is the result of deliberate choices, systems, and interventions. When we say "engineering the future," we mean applying rigorous analysis, ethical frameworks, and collaborative design to build new institutions, tools, and practices that serve justice and collective flourishing.'
         },
         {
-            question: 'How can I stay updated on Glenride's work?',
-            answer: 'You can subscribe to updates through our Library page, follow our published work as it comes online, or reach out directly via the Contact or Join pages to get involved more directly.'
+            question: "How can I stay updated on Glenride's work?",
+            answer: "You can subscribe to updates through our Library page, follow our published work as it comes online, or reach out directly via the Contact or Join pages to get involved more directly."
         }
     ];
 

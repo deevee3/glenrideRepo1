@@ -9,6 +9,9 @@
 /resources/js/wayfinder
 /storage/*.key
 /storage/pail
+/database/*.sqlite
+/database/*.sqlite-journal
+
 /vendor
 .DS_Store
 .env

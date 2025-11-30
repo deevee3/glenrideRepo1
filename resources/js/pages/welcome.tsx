@@ -57,29 +57,17 @@ export default function Welcome() {
                         {/* Main Content */}
                         <div className="relative z-10 flex w-full max-w-5xl flex-col items-center px-6 text-center">
                             {/* Headline */}
-                            <h1 className="mb-8 max-w-6xl text-5xl font-bold leading-tight tracking-tight text-white drop-shadow-xl md:text-7xl">
-                                A Think Tank for the World
+                            <h1 className="mb-12 max-w-6xl text-5xl font-bold leading-tight tracking-tight text-white drop-shadow-xl md:text-7xl">
+                                Serious thinkers.<br />Hard truths.<br />New power.
                             </h1>
-
-                            {/* Subheading Glass Card */}
-                            <div className="mb-10 max-w-3xl rounded-2xl border border-white/10 bg-white/5 p-8 shadow-2xl backdrop-blur-xl ring-1 ring-white/10 md:p-10">
-                                <p className="text-left text-lg font-medium leading-relaxed text-white/90 md:text-center md:text-xl">
-                                    Glenride gathers the most serious thinkers to confront the crises keeping us up at night and to turn hard truth into tools and laws that actually change how power works.
-                                </p>
-                                <div className="mt-6 border-t border-white/10 pt-6">
-                                    <p className="text-base italic text-white/70">
-                                        We don't just publish, we prototype. We don't just critique, we co-create. We don't just raise awareness, we build alternatives.
-                                    </p>
-                                </div>
-                            </div>
 
                             {/* CTAs */}
                             <div className="mb-6 flex flex-col items-center gap-6 md:flex-row">
                                 <Link href="/contact" className="rounded-lg bg-[#C5B393] px-8 py-4 text-lg font-bold text-white shadow-lg transition-all hover:bg-[#b09f80] hover:shadow-[#C5B393]/20">
-                                    Support Glenride’s Founding Fund
+                                    Support Glenride's Founding Fund
                                 </Link>
                                 <a href="#letter" className="flex items-center gap-2 border-b border-transparent text-lg font-bold text-white transition-colors hover:border-[#C5B393] hover:text-[#C5B393]">
-                                    Read D’Vaughn’s Letter <ArrowRight className="h-4 w-4" />
+                                    Read D'Vaughn's Letter <ArrowRight className="h-4 w-4" />
                                 </a>
                             </div>
                         </div>
@@ -272,9 +260,6 @@ export default function Welcome() {
                                 </div>
                             </div>
                         </div>
-                        <p className="text-sm text-gray-500">
-                            Glenride is a 501(c)(3) nonprofit organization building productive public infrastructure.
-                        </p>
                     </footer>
                 </main>
             </div>

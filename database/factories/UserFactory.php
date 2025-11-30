@@ -24,14 +24,19 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
+            'first_name' => fake()->firstName(),
+            'last_name' => fake()->lastName(),
+            'display_name' => fake()->optional(0.3)->userName(),
+            'pronouns' => fake()->optional(0.5)->randomElement(['he/him', 'she/her', 'they/them']),
+            'location' => fake()->optional(0.6)->city(),
+            'bio' => fake()->optional(0.4)->paragraph(),
+            'profile_image_url' => fake()->optional(0.3)->imageUrl(200, 200, 'people'),
+            'website_url' => fake()->optional(0.2)->url(),
+            'status' => 'active',
+            'email_verified_at' => now(),
             'remember_token' => Str::random(10),
-            'two_factor_secret' => Str::random(10),
-            'two_factor_recovery_codes' => Str::random(10),
-            'two_factor_confirmed_at' => now(),
         ];
     }
 
@@ -43,6 +48,43 @@ class UserFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
+    }
+
+    /**
+     * Indicate that the user has a specific status.
+     */
+    public function withStatus(string $status): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => $status,
+        ]);
+    }
+
+    /**
+     * Indicate that the user is invited (not yet active).
+     */
+    public function invited(): static
+    {
+        return $this->withStatus('invited')->state(fn (array $attributes) => [
+            'password' => null,
+            'email_verified_at' => null,
+        ]);
+    }
+
+    /**
+     * Indicate that the user is deactivated.
+     */
+    public function deactivated(): static
+    {
+        return $this->withStatus('deactivated');
+    }
+
+    /**
+     * Indicate that the user is banned.
+     */
+    public function banned(): static
+    {
+        return $this->withStatus('banned');
     }
 
     /**

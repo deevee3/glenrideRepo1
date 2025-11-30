@@ -1,24 +1,34 @@
-import { Head } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import PublicLayout from '@/layouts/public-layout';
-import { useState } from 'react';
+import { FormEventHandler } from 'react';
+
+declare let route: any;
 
 export default function Join() {
-    const [selectedRole, setSelectedRole] = useState<string>('');
-    const [formData, setFormData] = useState({
+    const { data, setData, post, processing, errors, reset, wasSuccessful, transform } = useForm({
         name: '',
         email: '',
-        role: '',
+        self_description: '',
         location: '',
-        workingOn: '',
-        collaboration: '',
+        current_work: '',
+        collaboration_idea: '',
         other: ''
     });
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit: FormEventHandler = (e) => {
         e.preventDefault();
-        // TODO: Implement form submission
-        console.log('Form submitted:', formData);
-        alert('Thank you for reaching out. We will review your submission and follow up with next steps.');
+        
+        // Combine other into collaboration_idea if present
+        transform((data) => ({
+            ...data,
+            collaboration_idea: data.other 
+                ? `${data.collaboration_idea}\n\nOther Context:\n${data.other}`
+                : data.collaboration_idea
+        }));
+
+        post(route('join.store'), {
+            onSuccess: () => reset(),
+        });
     };
 
     const audienceCards = [
@@ -80,13 +90,12 @@ export default function Join() {
                         {audienceCards.map((card) => (
                             <div
                                 key={card.id}
-                                className={`border-2 p-8 transition-all cursor-pointer ${selectedRole === card.id
+                                className={`border-2 p-8 transition-all cursor-pointer ${data.self_description === card.id
                                         ? 'border-black bg-white shadow-lg'
                                         : 'border-gray-200 hover:border-gray-400'
                                     }`}
                                 onClick={() => {
-                                    setSelectedRole(card.id);
-                                    setFormData({ ...formData, role: card.id });
+                                    setData('self_description', card.id);
                                     // Scroll to form
                                     document.getElementById('join-form')?.scrollIntoView({ behavior: 'smooth' });
                                 }}
@@ -114,6 +123,13 @@ export default function Join() {
                         We review every submission carefully. Share as much context as you can about your work, your questions, and the kind of collaboration you're imagining.
                     </p>
 
+                    {wasSuccessful && (
+                        <div className="mb-8 bg-green-50 border-l-4 border-green-500 p-4 text-green-700">
+                            <p className="font-bold">Thank you!</p>
+                            <p>Your request has been sent successfully. We will get back to you soon.</p>
+                        </div>
+                    )}
+
                     <form onSubmit={handleSubmit} className="space-y-8">
                         <div>
                             <label className="block text-sm font-bold uppercase tracking-wider mb-2">
@@ -122,10 +138,11 @@ export default function Join() {
                             <input
                                 type="text"
                                 required
-                                value={formData.name}
-                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                value={data.name}
+                                onChange={(e) => setData('name', e.target.value)}
                                 className="w-full px-4 py-3 border border-gray-300 focus:border-black focus:outline-none"
                             />
+                            {errors.name && <div className="text-red-500 text-sm mt-1">{errors.name}</div>}
                         </div>
 
                         <div>
@@ -135,10 +152,11 @@ export default function Join() {
                             <input
                                 type="email"
                                 required
-                                value={formData.email}
-                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                value={data.email}
+                                onChange={(e) => setData('email', e.target.value)}
                                 className="w-full px-4 py-3 border border-gray-300 focus:border-black focus:outline-none"
                             />
+                            {errors.email && <div className="text-red-500 text-sm mt-1">{errors.email}</div>}
                         </div>
 
                         <div>
@@ -147,8 +165,8 @@ export default function Join() {
                             </label>
                             <select
                                 required
-                                value={formData.role}
-                                onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                                value={data.self_description}
+                                onChange={(e) => setData('self_description', e.target.value)}
                                 className="w-full px-4 py-3 border border-gray-300 focus:border-black focus:outline-none bg-white"
                             >
                                 <option value="">Select one...</option>
@@ -158,6 +176,7 @@ export default function Join() {
                                 <option value="partner">Partner / Funder</option>
                                 <option value="other">Other</option>
                             </select>
+                            {errors.self_description && <div className="text-red-500 text-sm mt-1">{errors.self_description}</div>}
                         </div>
 
                         <div>
@@ -166,11 +185,12 @@ export default function Join() {
                             </label>
                             <input
                                 type="text"
-                                value={formData.location}
-                                onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                                value={data.location}
+                                onChange={(e) => setData('location', e.target.value)}
                                 className="w-full px-4 py-3 border border-gray-300 focus:border-black focus:outline-none"
                                 placeholder="City, Country or Region"
                             />
+                            {errors.location && <div className="text-red-500 text-sm mt-1">{errors.location}</div>}
                         </div>
 
                         <div>
@@ -179,12 +199,13 @@ export default function Join() {
                             </label>
                             <textarea
                                 required
-                                value={formData.workingOn}
-                                onChange={(e) => setFormData({ ...formData, workingOn: e.target.value })}
+                                value={data.current_work}
+                                onChange={(e) => setData('current_work', e.target.value)}
                                 rows={4}
                                 className="w-full px-4 py-3 border border-gray-300 focus:border-black focus:outline-none resize-none"
                                 placeholder="Tell us about your current work, research, projects, or interests..."
                             />
+                            {errors.current_work && <div className="text-red-500 text-sm mt-1">{errors.current_work}</div>}
                         </div>
 
                         <div>
@@ -193,12 +214,13 @@ export default function Join() {
                             </label>
                             <textarea
                                 required
-                                value={formData.collaboration}
-                                onChange={(e) => setFormData({ ...formData, collaboration: e.target.value })}
+                                value={data.collaboration_idea}
+                                onChange={(e) => setData('collaboration_idea', e.target.value)}
                                 rows={4}
                                 className="w-full px-4 py-3 border border-gray-300 focus:border-black focus:outline-none resize-none"
                                 placeholder="What kind of partnership or collaboration are you envisioning?"
                             />
+                            {errors.collaboration_idea && <div className="text-red-500 text-sm mt-1">{errors.collaboration_idea}</div>}
                         </div>
 
                         <div>
@@ -206,8 +228,8 @@ export default function Join() {
                                 Anything else we should know?
                             </label>
                             <textarea
-                                value={formData.other}
-                                onChange={(e) => setFormData({ ...formData, other: e.target.value })}
+                                value={data.other}
+                                onChange={(e) => setData('other', e.target.value)}
                                 rows={3}
                                 className="w-full px-4 py-3 border border-gray-300 focus:border-black focus:outline-none resize-none"
                                 placeholder="Optional additional context..."
@@ -217,9 +239,10 @@ export default function Join() {
                         <div className="pt-4">
                             <button
                                 type="submit"
-                                className="w-full md:w-auto bg-black text-white px-12 py-4 text-sm font-bold uppercase tracking-wider hover:bg-gray-800 transition-colors"
+                                disabled={processing}
+                                className="w-full md:w-auto bg-black text-white px-12 py-4 text-sm font-bold uppercase tracking-wider hover:bg-gray-800 transition-colors disabled:opacity-50"
                             >
-                                Send to Glenride
+                                {processing ? 'Sending...' : 'Send to Glenride'}
                             </button>
                             <p className="text-sm text-gray-500 mt-4">
                                 Thank you for reaching out. We'll review your submission and follow up with next steps, opportunities, or clarifying questions.

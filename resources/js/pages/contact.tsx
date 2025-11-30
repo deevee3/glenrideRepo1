@@ -1,20 +1,22 @@
-import { Head } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import PublicLayout from '@/layouts/public-layout';
-import { useState } from 'react';
+import { FormEventHandler } from 'react';
+
+declare let route: any;
 
 export default function Contact() {
-    const [formData, setFormData] = useState({
+    const { data, setData, post, processing, errors, reset, wasSuccessful } = useForm({
         name: '',
         email: '',
         subject: '',
         message: ''
     });
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit: FormEventHandler = (e) => {
         e.preventDefault();
-        // TODO: Implement form submission
-        console.log('Contact form submitted:', formData);
-        alert('Thank you for your message. We will get back to you soon.');
+        post(route('contact.store'), {
+            onSuccess: () => reset(),
+        });
     };
 
     return (
@@ -59,6 +61,13 @@ export default function Contact() {
                     </div>
 
                     {/* Contact Form */}
+                    {wasSuccessful && (
+                        <div className="mb-8 bg-green-50 border-l-4 border-green-500 p-4 text-green-700">
+                            <p className="font-bold">Thank you!</p>
+                            <p>Your message has been sent successfully. We will get back to you soon.</p>
+                        </div>
+                    )}
+
                     <form onSubmit={handleSubmit} className="space-y-8">
                         <div>
                             <label className="block text-sm font-bold uppercase tracking-wider mb-2">
@@ -67,10 +76,11 @@ export default function Contact() {
                             <input
                                 type="text"
                                 required
-                                value={formData.name}
-                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                value={data.name}
+                                onChange={(e) => setData('name', e.target.value)}
                                 className="w-full px-4 py-3 border border-gray-300 focus:border-black focus:outline-none"
                             />
+                            {errors.name && <div className="text-red-500 text-sm mt-1">{errors.name}</div>}
                         </div>
 
                         <div>
@@ -80,10 +90,11 @@ export default function Contact() {
                             <input
                                 type="email"
                                 required
-                                value={formData.email}
-                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                value={data.email}
+                                onChange={(e) => setData('email', e.target.value)}
                                 className="w-full px-4 py-3 border border-gray-300 focus:border-black focus:outline-none"
                             />
+                            {errors.email && <div className="text-red-500 text-sm mt-1">{errors.email}</div>}
                         </div>
 
                         <div>
@@ -93,11 +104,12 @@ export default function Contact() {
                             <input
                                 type="text"
                                 required
-                                value={formData.subject}
-                                onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                                value={data.subject}
+                                onChange={(e) => setData('subject', e.target.value)}
                                 className="w-full px-4 py-3 border border-gray-300 focus:border-black focus:outline-none"
                                 placeholder="What's this about?"
                             />
+                            {errors.subject && <div className="text-red-500 text-sm mt-1">{errors.subject}</div>}
                         </div>
 
                         <div>
@@ -106,20 +118,22 @@ export default function Contact() {
                             </label>
                             <textarea
                                 required
-                                value={formData.message}
-                                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                                value={data.message}
+                                onChange={(e) => setData('message', e.target.value)}
                                 rows={8}
                                 className="w-full px-4 py-3 border border-gray-300 focus:border-black focus:outline-none resize-none"
                                 placeholder="Tell us more..."
                             />
+                            {errors.message && <div className="text-red-500 text-sm mt-1">{errors.message}</div>}
                         </div>
 
                         <div className="pt-4">
                             <button
                                 type="submit"
-                                className="w-full md:w-auto bg-black text-white px-12 py-4 text-sm font-bold uppercase tracking-wider hover:bg-gray-800 transition-colors"
+                                disabled={processing}
+                                className="w-full md:w-auto bg-black text-white px-12 py-4 text-sm font-bold uppercase tracking-wider hover:bg-gray-800 transition-colors disabled:opacity-50"
                             >
-                                Send Message
+                                {processing ? 'Sending...' : 'Send Message'}
                             </button>
                         </div>
                     </form>
